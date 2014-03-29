@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ The MIT License (MIT)
+  ~
+  ~ Copyright (c) 2014 Markus Pöschl
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="de.poeschl.historgramGenerator.controller.ApplicationController">
+    <children>
+        <VBox prefHeight="375.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER" disable="false" fillHeight="true" focusTraversable="false"
+                      mouseTransparent="false" prefHeight="50.0" prefWidth="580.0" snapToPixel="true" spacing="20.0"
+                      visible="true">
+                    <children>
+                        <TextField fx:id="fileInputTextField" alignment="CENTER_LEFT" editable="true"
+                                   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                                   mouseTransparent="false" prefHeight="30.0" prefWidth="422.0"
+                                   promptText="Image input file" text=""/>
+                        <Button fx:id="selectFileInputButton" alignment="CENTER" cancelButton="false"
+                                defaultButton="false" minWidth="-1.0" mnemonicParsing="false" rotate="0.0"
+                                text="Select Image" textAlignment="CENTER" textOverrun="CLIP" underline="false">
+                            <rotationAxis>
+                                <Point3D z="1.0"/>
+                            </rotationAxis>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="20.0" right="20.0" fx:id="x2"/>
+                    </VBox.margin>
+                </HBox>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" fx:id="x1"/>
+                    </VBox.margin>
+                </Separator>
+                <StackPane prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="histogramImageView" fitHeight="250.0" fitWidth="512.0" pickOnBounds="true"
+                                   preserveRatio="true" StackPane.alignment="CENTER"/>
+                    </children>
+                </StackPane>
+                <Separator prefWidth="200.0" VBox.margin="$x1"/>
+                <Label text="Export as ..." VBox.margin="$x2"/>
+                <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="590.0" spacing="10.0" VBox.margin="$x2">
+                    <children>
+                        <Button fx:id="csvExportButton" mnemonicParsing="false" text=".csv"/>
+                        <Button fx:id="pngExportButton" mnemonicParsing="false" text=".png"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</AnchorPane>
