@@ -22,25 +22,33 @@
  * SOFTWARE.
  ******************************************************************************/
 
-package de.poeschl.historgramGenerator;
+package de.poeschl.histogramGenerator.generators;
+
+import de.poeschl.histogramGenerator.models.HistogramData;
+import de.poeschl.histogramGenerator.models.ImageData;
 
 /**
- * Project: HistogramGenerator
- *
  * Created by Markus Pöschl on 29.03.2014.
  */
+public interface GeneratorInterface {
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+    /**
+     * Set the input for the generation process.
+     *
+     * @param data The image as matrix representation of colors.
+     */
+    public void setImageAsInput(ImageData data);
 
-public class HistogramGeneratorApplication extends Application {
+    /**
+     * Do the generation stuff.
+     */
+    public void generateImageData();
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    /**
+     * Gives back the generated data or null if no data was generated.
+     *
+     * @return The generated data or null if nothing generated.
+     */
+    public HistogramData getHistogramOutput();
 
-    @Override
-    public void start(Stage primaryStage) {
-
-    }
 }

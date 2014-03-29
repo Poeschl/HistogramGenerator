@@ -22,12 +22,47 @@
  * SOFTWARE.
  ******************************************************************************/
 
-package de.poeschl.historgramGenerator.controller;
+package de.poeschl.histogramGenerator.utils;
+
+import de.poeschl.histogramGenerator.models.ImageData;
+import de.poeschl.histogramGenerator.models.Pixel;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
- * Project: HistogramGenerator
- * <p/>
  * Created by Markus Pöschl on 29.03.2014.
  */
-public class ApplicationController {
+public class ImageParser {
+    private static ImageParser ourInstance = new ImageParser();
+
+    public static ImageParser getInstance() {
+        return ourInstance;
+    }
+
+    private ImageParser() {
+    }
+
+    /**
+     * Parse the complete image and create a ImageData object from it.
+     *
+     * @param image The image to be parsed.
+     * @return The data of the image.
+     */
+    public ImageData parseImage(BufferedImage image) {
+        ImageData imageData = new ImageData(image.getWidth(), image.getHeight());
+
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                Pixel currentPixel = new Pixel(x, y);
+
+                //Read the colors per pixel
+                int colorValue = image.getRGB(x, y);
+
+                currentPixel.setColor(new Color(colorValue));
+                imageData.setPixel(currentPixel);
+            }
+        }
+        return imageData;
+    }
 }
