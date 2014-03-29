@@ -31,5 +31,5 @@ package de.poeschl.histogramGenerator.models;
  */
 
 public enum HistogramType {
-    RGB, R, G, B;
+    RGB, RED, GREEN, BLUE;
 }

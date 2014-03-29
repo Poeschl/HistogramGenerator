@@ -33,12 +33,20 @@ import java.awt.*;
 /**
  * Created by Markus Pöschl on 29.03.2014.
  */
-public class CombinedRGBGenerator implements GeneratorInterface {
+public class RGBGenerator implements GeneratorInterface {
 
+    private HistogramType type;
     private ImageData imageSource;
     private HistogramData generatedData;
 
-    public CombinedRGBGenerator(ImageData imageSource) {
+    /**
+     * Creates a generator for one color channel or combined. The channel needs to be defined by the type parameter.
+     *
+     * @param typeOfResult The type of generated data.
+     * @param imageSource  The source image as color values.
+     */
+    public RGBGenerator(HistogramType typeOfResult, ImageData imageSource) {
+        this.type = typeOfResult;
         setImageAsInput(imageSource);
     }
 
@@ -48,27 +56,41 @@ public class CombinedRGBGenerator implements GeneratorInterface {
     }
 
     /**
-     * Calculates the histogram data based on the gray value per pixel. The Calculation of the gray values comes from <a href="http://en.wikipedia.org/wiki/Grayscale">wikipedia</a>.
+     * Calculates the histogram data based on one color channel or the grayscaled version of the image.
      */
     @Override
     public void generateImageData() {
-        generatedData = new HistogramData(HistogramType.RGB);
+        generatedData = new HistogramData(type);
 
         for (int y = 0; y < imageSource.getHeight(); y++) {
             for (int x = 0; x < imageSource.getWidth(); x++) {
                 Color currentPixelColor = imageSource.getPixel(x, y).getColor();
 
-                //calculates the grayscale value of the current pixel. The formula comes from wikipedia.
-                int combinedValue = (int) (0.2989 * currentPixelColor.getRed() + 0.5870 * currentPixelColor.getGreen() + 0.1140 * currentPixelColor.getBlue());
+                int brightness = 0;
+                switch (type) {
+                    case RED:
+                        brightness = currentPixelColor.getRed();
+                        break;
+                    case GREEN:
+                        brightness = currentPixelColor.getGreen();
+                        break;
+                    case BLUE:
+                        brightness = currentPixelColor.getBlue();
+                        break;
+                    case RGB:
+                    default:
+                        //calculates the grayscale value of the current pixel. The formula comes from wikipedia.
+                        brightness = (int) (0.299 * currentPixelColor.getRed() + 0.587 * currentPixelColor.getGreen() + 0.114 * currentPixelColor.getBlue());
+                        break;
+                }
 
-                generatedData.incrementBrightnessValue(combinedValue);
+                generatedData.incrementBrightnessValue(brightness);
             }
         }
-
     }
 
     @Override
     public HistogramData getHistogramOutput() {
-        return null;
+        return generatedData;
     }
 }

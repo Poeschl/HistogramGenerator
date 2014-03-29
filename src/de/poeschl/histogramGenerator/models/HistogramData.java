@@ -31,7 +31,7 @@ package de.poeschl.histogramGenerator.models;
  */
 public class HistogramData {
 
-    public static final int MAX_CHANNEL_VALUE = 265;
+    public static final int MAX_CHANNEL_VALUE = 256;
 
     private HistogramType type;
     private int[] values;
@@ -61,6 +61,18 @@ public class HistogramData {
     }
 
     public void incrementBrightnessValue(int brightness) {
-        values[brightness] = values[brightness]++;
+        values[brightness] = ++values[brightness];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(type.toString() + " Values: \n");
+        for (int i = 0; i < values.length; i++) {
+            builder.append(i);
+            builder.append(": ");
+            builder.append(values[i]);
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 }
