@@ -24,26 +24,32 @@
   ~ SOFTWARE.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Point3D?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="430.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/2.2"
-            fx:controller="de.poeschl.historgramGenerator.controller.ApplicationController">
+            fx:controller="de.poeschl.histogramGenerator.controller.ApplicationController">
     <children>
-        <VBox prefHeight="375.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+        <VBox prefHeight="430.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
+                <Label text="File Input:">
+                    <VBox.margin>
+                        <Insets left="20.0" right="20.0" fx:id="x2"/>
+                    </VBox.margin>
+                </Label>
                 <HBox alignment="CENTER" disable="false" fillHeight="true" focusTraversable="false"
-                      mouseTransparent="false" prefHeight="50.0" prefWidth="580.0" snapToPixel="true" spacing="20.0"
+                      mouseTransparent="false" prefHeight="50.0" prefWidth="600.0" snapToPixel="true" spacing="5.0"
                       visible="true">
                     <children>
+                        <ImageView fx:id="fileInputPreviewImageView" fitHeight="50.0" fitWidth="50.0"
+                                   pickOnBounds="true" preserveRatio="true"/>
                         <TextField fx:id="fileInputTextField" alignment="CENTER_LEFT" editable="true"
                                    maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                                   mouseTransparent="false" prefHeight="30.0" prefWidth="422.0"
+                                   mouseTransparent="false" prefHeight="30.0" prefWidth="380.0"
                                    promptText="Image input file" text=""/>
                         <Button fx:id="selectFileInputButton" alignment="CENTER" cancelButton="false"
                                 defaultButton="false" minWidth="-1.0" mnemonicParsing="false" rotate="0.0"
@@ -52,9 +58,10 @@
                                 <Point3D z="1.0"/>
                             </rotationAxis>
                         </Button>
+                        <Button fx:id="generateButton" mnemonicParsing="false" text="Generate"/>
                     </children>
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" fx:id="x2"/>
+                        <Insets left="20.0" right="20.0" top="5.0" fx:id="x3"/>
                     </VBox.margin>
                 </HBox>
                 <Separator prefWidth="200.0">
@@ -70,13 +77,16 @@
                 </StackPane>
                 <Separator prefWidth="200.0" VBox.margin="$x1"/>
                 <Label text="Export as ..." VBox.margin="$x2"/>
-                <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="590.0" spacing="10.0" VBox.margin="$x2">
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="590.0" spacing="10.0" VBox.margin="$x3">
                     <children>
                         <Button fx:id="csvExportButton" mnemonicParsing="false" text=".csv"/>
                         <Button fx:id="pngExportButton" mnemonicParsing="false" text=".png"/>
                     </children>
                 </HBox>
             </children>
+            <padding>
+                <Insets bottom="5.0" top="5.0" fx:id="x1"/>
+            </padding>
         </VBox>
     </children>
     <padding>
