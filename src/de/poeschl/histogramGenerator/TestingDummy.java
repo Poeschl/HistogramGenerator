@@ -24,10 +24,8 @@
 
 package de.poeschl.histogramGenerator;
 
-import de.poeschl.histogramGenerator.generators.GeneratorInterface;
-import de.poeschl.histogramGenerator.generators.RGBGenerator;
+import de.poeschl.histogramGenerator.generators.RGBHistogramGenerator;
 import de.poeschl.histogramGenerator.models.HistogramData;
-import de.poeschl.histogramGenerator.models.HistogramType;
 import de.poeschl.histogramGenerator.models.ImageData;
 import de.poeschl.histogramGenerator.utils.ImageParser;
 
@@ -47,13 +45,13 @@ public class TestingDummy {
 
         try {
             ImageData imageData = ImageParser.getInstance().parseImage(ImageIO.read(imageStream));
-            GeneratorInterface dummyGenerator;
+            RGBHistogramGenerator dummyGenerator;
 
-            dummyGenerator = new RGBGenerator(HistogramType.RED, imageData);
+            dummyGenerator = new RGBHistogramGenerator(imageData);
 
             dummyGenerator.generateImageData();
 
-            HistogramData result = dummyGenerator.getHistogramOutput();
+            HistogramData result = dummyGenerator.getRedHistogramOutput();
 
             System.out.println(result.toString());
 
