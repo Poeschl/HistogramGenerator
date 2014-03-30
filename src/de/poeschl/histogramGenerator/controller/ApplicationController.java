@@ -20,9 +20,13 @@
 package de.poeschl.histogramGenerator.controller;
 
 import de.poeschl.histogramGenerator.HistogramGeneratorApplication;
+import de.poeschl.histogramGenerator.generators.RGBHistogramGenerator;
+import de.poeschl.histogramGenerator.models.ImageData;
 import de.poeschl.histogramGenerator.utils.FileHelper;
+import de.poeschl.histogramGenerator.utils.ImageParser;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +34,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyEvent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -42,7 +47,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Markus Pöschl on 29.03.2014.
  */
-public class ApplicationController implements Initializable, EventHandler<ActionEvent> {
+public class ApplicationController implements Initializable, EventHandler<Event> {
 
     @FXML
     private TextField fileInputTextField;
@@ -66,10 +71,15 @@ public class ApplicationController implements Initializable, EventHandler<Action
     private Button pngExportButton;
 
     private BufferedImage sourceImage;
+    /**
+     * A flag to recognise the modification of the image path.
+     */
+    private boolean inputPathChanged = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        fileInputTextField.addEventHandler(KeyEvent.KEY_PRESSED, this);
         selectFileInputButton.addEventHandler(ActionEvent.ACTION, this);
         generateButton.addEventHandler(ActionEvent.ACTION, this);
 
@@ -84,12 +94,6 @@ public class ApplicationController implements Initializable, EventHandler<Action
         updateSourceImagePreview();
     }
 
-    private void updateSourceImagePreview() {
-        WritableImage previewImage = SwingFXUtils.toFXImage(sourceImage, null);
-
-        fileInputPreviewImageView.setImage(previewImage);
-    }
-
     private void setUpSampleData() {
         InputStream imageStream = ApplicationController.class.getResourceAsStream("/de/poeschl/histogramGenerator/resources/images/sample.png");
 
@@ -102,14 +106,34 @@ public class ApplicationController implements Initializable, EventHandler<Action
     }
 
     @Override
-    public void handle(ActionEvent actionEvent) {
-        Object actionSource = actionEvent.getSource();
+    public void handle(Event event) {
+        if (event.getEventType().equals(ActionEvent.ACTION)) {
+            onActionEvents(event);
+
+        } else if (event.getEventType().equals(KeyEvent.KEY_PRESSED)) {
+            onKeyPressedEvents(event);
+
+        }
+    }
+
+    private void onActionEvents(Event event) {
+        Object actionSource = event.getSource();
 
         if (actionSource.equals(selectFileInputButton)) {
             //Find the input file
             selectInputFile();
 
         } else if (actionSource.equals(generateButton)) {
+            if (inputPathChanged) {
+                loadFile(new File(fileInputTextField.getText()));
+            }
+
+            ImageData imageData = ImageParser.getInstance().parseImage(sourceImage);
+            RGBHistogramGenerator generator = new RGBHistogramGenerator(imageData);
+            generator.generateImageData();
+
+            System.out.println(generator.getCombinedHistogramOutput().toString());
+
 
         } else if (actionSource.equals(csvExportButton)) {
 
@@ -118,16 +142,36 @@ public class ApplicationController implements Initializable, EventHandler<Action
         }
     }
 
+    private void onKeyPressedEvents(Event event) {
+        if (event.getSource().equals(fileInputTextField)) {
+            inputPathChanged = true;
+        }
+    }
+
+    private void updateSourceImagePreview() {
+        WritableImage previewImage = SwingFXUtils.toFXImage(sourceImage, null);
+        fileInputPreviewImageView.setImage(previewImage);
+    }
+
     private void selectInputFile() {
         File inputFile = FileHelper.getInstance().selectImageFromFileSystem(HistogramGeneratorApplication.getApplicationStage());
-
         if (inputFile == null) {
+            return;
+        }
+        loadFile(inputFile);
+    }
+
+    private void loadFile(File file) {
+        if (!file.exists()) {
+            //TODO Add dialog, when file don't exists.
             return;
         }
 
         try {
-            setSourceImage(ImageIO.read(inputFile));
-            this.fileInputTextField.setText(inputFile.getPath());
+            setSourceImage(ImageIO.read(file));
+
+            this.fileInputTextField.setText(file.getPath());
+            inputPathChanged = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
