@@ -35,12 +35,17 @@ public class HistogramGeneratorApplication extends Application {
 
     private static final String APP_TITLE = "Histogram Generator";
 
+    private static Stage applicationStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+
+        applicationStage = primaryStage;
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/de/poeschl/histogramGenerator/resources/layouts/Application.fxml"));
             primaryStage.setTitle(APP_TITLE);
@@ -49,5 +54,14 @@ public class HistogramGeneratorApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Return the current stage of the application.
+     *
+     * @return The application stage.
+     */
+    public static Stage getApplicationStage() {
+        return applicationStage;
     }
 }

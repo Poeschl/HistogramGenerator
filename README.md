@@ -12,6 +12,8 @@ Supporting input file formats:
 
 - png
 - jpeg
+- gif
+- all others (not tested)
 
 Export histogram data as:
 

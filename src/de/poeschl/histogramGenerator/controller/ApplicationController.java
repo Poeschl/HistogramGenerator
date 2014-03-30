@@ -19,7 +19,11 @@
 
 package de.poeschl.histogramGenerator.controller;
 
+import de.poeschl.histogramGenerator.HistogramGeneratorApplication;
+import de.poeschl.histogramGenerator.utils.FileHelper;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -29,6 +33,7 @@ import javafx.scene.image.WritableImage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,7 +42,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Markus Pöschl on 29.03.2014.
  */
-public class ApplicationController implements Initializable {
+public class ApplicationController implements Initializable, EventHandler<ActionEvent> {
 
     @FXML
     private TextField fileInputTextField;
@@ -65,7 +70,11 @@ public class ApplicationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        fileInputPreviewImageView.setSmooth(true);
+        selectFileInputButton.addEventHandler(ActionEvent.ACTION, this);
+        generateButton.addEventHandler(ActionEvent.ACTION, this);
+
+        csvExportButton.addEventHandler(ActionEvent.ACTION, this);
+        pngExportButton.addEventHandler(ActionEvent.ACTION, this);
 
         setUpSampleData();
     }
@@ -76,8 +85,7 @@ public class ApplicationController implements Initializable {
     }
 
     private void updateSourceImagePreview() {
-        WritableImage previewImage = new WritableImage(sourceImage.getWidth(), sourceImage.getHeight());
-        SwingFXUtils.toFXImage(sourceImage, previewImage);
+        WritableImage previewImage = SwingFXUtils.toFXImage(sourceImage, null);
 
         fileInputPreviewImageView.setImage(previewImage);
     }
@@ -89,6 +97,38 @@ public class ApplicationController implements Initializable {
             setSourceImage(ImageIO.read(imageStream));
         } catch (IOException e) {
             //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void handle(ActionEvent actionEvent) {
+        Object actionSource = actionEvent.getSource();
+
+        if (actionSource.equals(selectFileInputButton)) {
+            //Find the input file
+            selectInputFile();
+
+        } else if (actionSource.equals(generateButton)) {
+
+        } else if (actionSource.equals(csvExportButton)) {
+
+        } else if (actionSource.equals(pngExportButton)) {
+
+        }
+    }
+
+    private void selectInputFile() {
+        File inputFile = FileHelper.getInstance().selectImageFromFileSystem(HistogramGeneratorApplication.getApplicationStage());
+
+        if (inputFile == null) {
+            return;
+        }
+
+        try {
+            setSourceImage(ImageIO.read(inputFile));
+            this.fileInputTextField.setText(inputFile.getPath());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
