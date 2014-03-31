@@ -20,7 +20,6 @@
 package de.poeschl.histogramGenerator.generators;
 
 import de.poeschl.histogramGenerator.models.HistogramData;
-import de.poeschl.histogramGenerator.models.HistogramType;
 import de.poeschl.histogramGenerator.models.ImageData;
 
 import java.awt.*;
@@ -32,10 +31,7 @@ public class RGBHistogramGenerator {
 
     private ImageData imageSource;
 
-    private HistogramData combinedHistogram;
-    private HistogramData redHistogram;
-    private HistogramData greenHistogram;
-    private HistogramData blueHistogram;
+    private HistogramData histogram;
 
     /**
      * Creates a generator for one color channel or combined. The channel needs to be defined by the type parameter.
@@ -50,10 +46,8 @@ public class RGBHistogramGenerator {
      * Calculates the histogram data based on one color channel or the grayscaled version of the image.
      */
     public void generateImageData() {
-        combinedHistogram = new HistogramData(HistogramType.RGB);
-        redHistogram = new HistogramData(HistogramType.RED);
-        greenHistogram = new HistogramData(HistogramType.GREEN);
-        blueHistogram = new HistogramData(HistogramType.BLUE);
+        histogram = new HistogramData();
+
 
         for (int y = 0; y < imageSource.getHeight(); y++) {
             for (int x = 0; x < imageSource.getWidth(); x++) {
@@ -64,47 +58,21 @@ public class RGBHistogramGenerator {
                 int greenBrightness = currentPixelColor.getGreen();
                 int blueBrightness = currentPixelColor.getBlue();
 
-                combinedHistogram.incrementBrightnessValue(combinedBrightness);
-                redHistogram.incrementBrightnessValue(redBrightness);
-                greenHistogram.incrementBrightnessValue(greenBrightness);
-                blueHistogram.incrementBrightnessValue(blueBrightness);
+                histogram.getCombinedChannel().incrementBrightnessValue(combinedBrightness);
+                histogram.getRedChannel().incrementBrightnessValue(redBrightness);
+                histogram.getGreenChannel().incrementBrightnessValue(greenBrightness);
+                histogram.getBlueChannel().incrementBrightnessValue(blueBrightness);
             }
         }
     }
 
     /**
-     * Returns the output for the combined histogram. Or null if no output generated.
+     * Returns the output for the histogram. Or null if no output generated.
      *
      * @return The histogram data.
      */
-    public HistogramData getCombinedHistogramOutput() {
-        return combinedHistogram;
+    public HistogramData getHistogramOutput() {
+        return histogram;
     }
 
-    /**
-     * Returns the output for the red histogram. Or null if no output generated.
-     *
-     * @return The histogram data.
-     */
-    public HistogramData getRedHistogramOutput() {
-        return combinedHistogram;
-    }
-
-    /**
-     * Returns the output for the green histogram. Or null if no output generated.
-     *
-     * @return The histogram data.
-     */
-    public HistogramData getGreenHistogramOutput() {
-        return combinedHistogram;
-    }
-
-    /**
-     * Returns the output for the blue histogram. Or null if no output generated.
-     *
-     * @return The histogram data.
-     */
-    public HistogramData getBlueHistogramOutput() {
-        return combinedHistogram;
-    }
 }

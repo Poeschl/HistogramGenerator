@@ -25,6 +25,6 @@ package de.poeschl.histogramGenerator.models;
  * Created by Markus Pöschl on 29.03.2014.
  */
 
-public enum HistogramType {
+public enum ChannelType {
     RGB, RED, GREEN, BLUE;
 }

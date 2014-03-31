@@ -20,54 +20,65 @@
 package de.poeschl.histogramGenerator.models;
 
 /**
- * Stores the data of the histogram of a image. It only hold values for one defined channel or combined.
+ * Stores the data of the histogram of a image. It only hold values for one defined channel or combinedChannel.
  * <p/>
  * Created by Markus Pöschl on 29.03.2014.
  */
 public class HistogramData {
 
-    public static final int MAX_CHANNEL_VALUE = 256;
+    private ChannelData combinedChannel;
+    private ChannelData redChannel;
+    private ChannelData greenChannel;
+    private ChannelData blueChannel;
 
-    private HistogramType type;
-    private int[] values;
-
-    public HistogramData(HistogramType type) {
-        this.type = type;
-        this.values = new int[MAX_CHANNEL_VALUE];
+    public HistogramData() {
+        combinedChannel = new ChannelData(ChannelType.RGB);
+        redChannel = new ChannelData(ChannelType.RED);
+        greenChannel = new ChannelData(ChannelType.GREEN);
+        blueChannel = new ChannelData(ChannelType.BLUE);
     }
 
-    public HistogramData(HistogramData otherData) {
-        this.type = otherData.type;
-        this.values = otherData.values;
+    public ChannelData getCombinedChannel() {
+        return combinedChannel;
     }
 
-    public HistogramType getType() {
-        return type;
+    public void setCombinedChannel(ChannelData combinedChannel) {
+        this.combinedChannel = combinedChannel;
     }
 
-    /**
-     * Gives back an int value on the given position in the brightness (0 - 255) of the channel.
-     *
-     * @param brightness The brightness to look for.
-     * @return The count of appearances of this brightness in the picture.
-     */
-    public int getValueForBrightness(int brightness) {
-        return values[brightness];
+    public ChannelData getRedChannel() {
+        return redChannel;
     }
 
-    public void incrementBrightnessValue(int brightness) {
-        values[brightness] = ++values[brightness];
+    public void setRedChannel(ChannelData redChannel) {
+        this.redChannel = redChannel;
+    }
+
+    public ChannelData getGreenChannel() {
+        return greenChannel;
+    }
+
+    public void setGreenChannel(ChannelData greenChannel) {
+        this.greenChannel = greenChannel;
+    }
+
+    public ChannelData getBlueChannel() {
+        return blueChannel;
+    }
+
+    public void setBlueChannel(ChannelData blueChannel) {
+        this.blueChannel = blueChannel;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(type.toString() + " Values: \n");
-        for (int i = 0; i < values.length; i++) {
-            builder.append(i);
-            builder.append(": ");
-            builder.append(values[i]);
-            builder.append("\n");
-        }
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(combinedChannel.toString());
+        builder.append(redChannel.toString());
+        builder.append(greenChannel.toString());
+        builder.append(blueChannel.toString());
+
         return builder.toString();
     }
 }
