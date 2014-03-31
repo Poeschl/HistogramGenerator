@@ -20,6 +20,8 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
@@ -67,8 +69,14 @@
                 </Separator>
                 <StackPane prefHeight="150.0" prefWidth="200.0">
                     <children>
-                        <ImageView fx:id="histogramImageView" fitHeight="250.0" fitWidth="512.0" pickOnBounds="true"
-                                   preserveRatio="true" StackPane.alignment="CENTER"/>
+                        <AreaChart fx:id="histogramChart" minHeight="-Infinity" prefHeight="250.0">
+                            <xAxis>
+                                <NumberAxis autoRanging="false" side="BOTTOM" upperBound="255.0"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </AreaChart>
                     </children>
                 </StackPane>
                 <Separator prefWidth="200.0" VBox.margin="$x1"/>

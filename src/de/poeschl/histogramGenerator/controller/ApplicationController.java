@@ -25,6 +25,7 @@ import de.poeschl.histogramGenerator.generators.RGBHistogramGenerator;
 import de.poeschl.histogramGenerator.models.ExportFileFormat;
 import de.poeschl.histogramGenerator.models.HistogramData;
 import de.poeschl.histogramGenerator.models.ImageData;
+import de.poeschl.histogramGenerator.utils.ChartHelper;
 import de.poeschl.histogramGenerator.utils.FileHelper;
 import de.poeschl.histogramGenerator.utils.ImageParser;
 import javafx.embed.swing.SwingFXUtils;
@@ -33,6 +34,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -66,7 +68,7 @@ public class ApplicationController implements Initializable, EventHandler<Event>
     private ImageView fileInputPreviewImageView;
 
     @FXML
-    private ImageView histogramImageView;
+    private AreaChart histogramChart;
 
     @FXML
     private Button csvExportButton;
@@ -92,12 +94,9 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         csvExportButton.addEventHandler(ActionEvent.ACTION, this);
         pngExportButton.addEventHandler(ActionEvent.ACTION, this);
 
-        setUpSampleData();
-    }
+        ChartHelper.getInstance().setUpChart(histogramChart);
 
-    private void setSourceImage(BufferedImage image) {
-        this.sourceImage = image;
-        updateSourceImagePreview();
+        setUpSampleData();
     }
 
     private void setUpSampleData() {
@@ -105,6 +104,8 @@ public class ApplicationController implements Initializable, EventHandler<Event>
 
         try {
             setSourceImage(ImageIO.read(imageStream));
+            generateHistogram();
+            updateHistogramChart();
         } catch (IOException e) {
             //TODO: Show error dialog
             e.printStackTrace();
@@ -133,12 +134,9 @@ public class ApplicationController implements Initializable, EventHandler<Event>
             if (inputPathChanged) {
                 loadFile(new File(fileInputTextField.getText()));
             }
+            generateHistogram();
 
-            ImageData imageData = ImageParser.getInstance().parseImage(sourceImage);
-            RGBHistogramGenerator generator = new RGBHistogramGenerator(imageData);
-            generator.generateImageData();
-
-            currentHistogramData = generator.getHistogramOutput();
+            updateHistogramChart();
 
         } else if (actionSource.equals(csvExportButton)) {
             CsvExporter exporter = new CsvExporter();
@@ -156,6 +154,11 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         if (event.getSource().equals(fileInputTextField)) {
             inputPathChanged = true;
         }
+    }
+
+    private void setSourceImage(BufferedImage image) {
+        this.sourceImage = image;
+        updateSourceImagePreview();
     }
 
     private void updateSourceImagePreview() {
@@ -185,5 +188,17 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void generateHistogram() {
+        ImageData imageData = ImageParser.getInstance().parseImage(sourceImage);
+        RGBHistogramGenerator generator = new RGBHistogramGenerator(imageData);
+        generator.generateImageData();
+
+        currentHistogramData = generator.getHistogramOutput();
+    }
+
+    private void updateHistogramChart() {
+        ChartHelper.getInstance().updateHistogramChart(histogramChart, currentHistogramData);
     }
 }
