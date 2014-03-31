@@ -20,7 +20,10 @@
 package de.poeschl.histogramGenerator.controller;
 
 import de.poeschl.histogramGenerator.HistogramGeneratorApplication;
+import de.poeschl.histogramGenerator.exporter.CsvExporter;
 import de.poeschl.histogramGenerator.generators.RGBHistogramGenerator;
+import de.poeschl.histogramGenerator.models.ExportFileFormat;
+import de.poeschl.histogramGenerator.models.HistogramData;
 import de.poeschl.histogramGenerator.models.ImageData;
 import de.poeschl.histogramGenerator.utils.FileHelper;
 import de.poeschl.histogramGenerator.utils.ImageParser;
@@ -39,6 +42,7 @@ import javafx.scene.input.KeyEvent;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -71,6 +75,8 @@ public class ApplicationController implements Initializable, EventHandler<Event>
     private Button pngExportButton;
 
     private BufferedImage sourceImage;
+    private HistogramData currentHistogramData;
+
     /**
      * A flag to recognise the modification of the image path.
      */
@@ -132,10 +138,14 @@ public class ApplicationController implements Initializable, EventHandler<Event>
             RGBHistogramGenerator generator = new RGBHistogramGenerator(imageData);
             generator.generateImageData();
 
-            System.out.println(generator.getCombinedHistogramOutput().toString());
-
+            currentHistogramData = generator.getHistogramOutput();
 
         } else if (actionSource.equals(csvExportButton)) {
+            CsvExporter exporter = new CsvExporter();
+
+            FileWriter output = FileHelper.getInstance().getSaveFileWriter(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.CSV);
+
+            exporter.exportToFileWriter(output, currentHistogramData);
 
         } else if (actionSource.equals(pngExportButton)) {
 
