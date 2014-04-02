@@ -4,17 +4,19 @@
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="de.poeschl.histogramGenerator.HistogramGeneratorApplication" />
-        <option name="description" value="A lightweight and simple generator or histograms out of any image." />
+        <option name="description" value="" />
         <option name="htmlParamFile" value="" />
-        <option name="nativeBundle" value="all" />
         <option name="paramFile" value="" />
         <option name="title" value="Histogram Generator" />
-        <option name="vendor" value="" />
+        <option name="vendor" value="Markus Poeschl" />
       </options>
     </properties>
     <root id="root">
-      <element id="archive" name="JavaFXApp.jar">
-        <element id="module-output" name="Histogram Generator" />
+      <element id="archive" name="HistogramGenerator.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="HistogramGenerator" />
       </element>
     </root>
   </artifact>
