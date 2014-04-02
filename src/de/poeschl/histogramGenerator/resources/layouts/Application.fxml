@@ -25,14 +25,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="430.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/2.2"
+<AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0"
+            prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
             fx:controller="de.poeschl.histogramGenerator.controller.ApplicationController">
     <children>
-        <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="640.0"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
+        <VBox minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="File Input:">
                     <VBox.margin>
@@ -40,7 +38,7 @@
                     </VBox.margin>
                 </Label>
                 <HBox alignment="CENTER" disable="false" fillHeight="true" focusTraversable="false"
-                      mouseTransparent="false" prefHeight="50.0" prefWidth="600.0" snapToPixel="true" spacing="5.0"
+                      mouseTransparent="false" prefHeight="-1.0" prefWidth="-1.0" snapToPixel="true" spacing="5.0"
                       visible="true" VBox.vgrow="NEVER">
                     <children>
                         <ImageView fx:id="fileInputPreviewImageView" fitHeight="50.0" fitWidth="50.0"
@@ -62,30 +60,34 @@
                         <Insets left="20.0" right="20.0" top="5.0" fx:id="x3"/>
                     </VBox.margin>
                 </HBox>
-                <Separator prefWidth="200.0">
+                <Separator prefWidth="-1.0">
                     <VBox.margin>
                         <Insets bottom="5.0" top="5.0" fx:id="x1"/>
                     </VBox.margin>
                 </Separator>
-                <StackPane prefHeight="150.0" prefWidth="200.0">
+                <StackPane prefHeight="-1.0" prefWidth="-1.0">
                     <children>
                         <AreaChart fx:id="histogramChart" minHeight="-Infinity" prefHeight="250.0">
                             <xAxis>
-                                <NumberAxis autoRanging="false" side="BOTTOM" upperBound="255.0"/>
+                                <NumberAxis autoRanging="false" minorTickCount="2" minorTickVisible="true" side="BOTTOM"
+                                            tickUnit="10.0" upperBound="255.0"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT"/>
+                                <NumberAxis minorTickCount="4" minorTickVisible="false" side="LEFT"/>
                             </yAxis>
                         </AreaChart>
                     </children>
                 </StackPane>
-                <Separator prefWidth="200.0" VBox.margin="$x1"/>
+                <Separator prefWidth="-1.0" VBox.margin="$x1"/>
                 <Label text="Export as ..." VBox.margin="$x2"/>
-                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="590.0" spacing="10.0" VBox.margin="$x3">
+                <HBox alignment="CENTER_LEFT" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" VBox.margin="$x3">
                     <children>
                         <Button fx:id="csvExportButton" mnemonicParsing="false" text=".csv"/>
                         <Button fx:id="pngExportButton" mnemonicParsing="false" text=".png"/>
                     </children>
+                    <padding>
+                        <Insets bottom="5.0"/>
+                    </padding>
                 </HBox>
             </children>
             <padding>
