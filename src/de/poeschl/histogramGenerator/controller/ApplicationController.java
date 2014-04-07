@@ -27,6 +27,7 @@ import de.poeschl.histogramGenerator.models.ExportFileFormat;
 import de.poeschl.histogramGenerator.models.HistogramData;
 import de.poeschl.histogramGenerator.models.ImageData;
 import de.poeschl.histogramGenerator.utils.ChartHelper;
+import de.poeschl.histogramGenerator.utils.DialogHelper;
 import de.poeschl.histogramGenerator.utils.FileHelper;
 import de.poeschl.histogramGenerator.utils.ImageParser;
 import javafx.embed.swing.SwingFXUtils;
@@ -108,7 +109,7 @@ public class ApplicationController implements Initializable, EventHandler<Event>
             generateHistogram();
             updateHistogramChart();
         } catch (IOException e) {
-            //TODO: Show error dialog
+            DialogHelper.getInstance().showBasicDialog("Image couldn't be loaded!");
             e.printStackTrace();
         }
     }
@@ -132,26 +133,32 @@ public class ApplicationController implements Initializable, EventHandler<Event>
             selectInputFile();
 
         } else if (actionSource.equals(generateButton)) {
+            boolean changed = false;
             if (inputPathChanged) {
-                loadFile(new File(fileInputTextField.getText()));
+                changed = loadFile(new File(fileInputTextField.getText()));
             }
-            generateHistogram();
-
-            updateHistogramChart();
+            if (changed) {
+                generateHistogram();
+                updateHistogramChart();
+            }
 
         } else if (actionSource.equals(csvExportButton)) {
             CsvExporter exporter = new CsvExporter();
 
             FileOutputStream output = FileHelper.getInstance().getSaveFileOutput(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.CSV);
 
-            exporter.exportToFileWriter(output, currentHistogramData);
+            if (output != null) {
+                exporter.exportToFileWriter(output, currentHistogramData);
+            }
 
         } else if (actionSource.equals(pngExportButton)) {
             PngExporter exporter = new PngExporter();
 
             FileOutputStream output = FileHelper.getInstance().getSaveFileOutput(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.PNG);
 
-            exporter.exportToFileWriter(output, currentHistogramData);
+            if (output != null) {
+                exporter.exportToFileWriter(output, currentHistogramData);
+            }
 
         }
     }
@@ -180,20 +187,27 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         loadFile(inputFile);
     }
 
-    private void loadFile(File file) {
+    /**
+     * Loads a image in the program.
+     *
+     * @param file The file to be loaded.
+     * @return True if a file was loaded, false otherwise.
+     */
+    private boolean loadFile(File file) {
         if (!file.exists()) {
-            //TODO Add dialog, when file don't exists.
-            return;
+            DialogHelper.getInstance().showBasicDialog("File don't exists!");
+            return false;
         }
-
         try {
             setSourceImage(ImageIO.read(file));
 
             this.fileInputTextField.setText(file.getPath());
             inputPathChanged = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            DialogHelper.getInstance().showBasicDialog("File could not be loaded!");
+            return false;
         }
+        return true;
     }
 
     private void generateHistogram() {

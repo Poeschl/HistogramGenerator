@@ -85,6 +85,7 @@ public class PngExporter implements ExporterInterface {
         xAxis.setTickUnit(10);
         xAxis.setMinorTickCount(2);
         xAxis.setSide(Side.BOTTOM);
+        xAxis.setAutoRanging(false);
 
         NumberAxis yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
