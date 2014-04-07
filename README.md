@@ -19,5 +19,6 @@ Export histogram data as:
 
 - .csv (comma-separated)
 - .png
-- (more is coming up)
+
+If you need more as output, I'm happy when you send me a pull request ;)
 
