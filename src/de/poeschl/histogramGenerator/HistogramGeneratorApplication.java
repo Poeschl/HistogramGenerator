@@ -20,7 +20,7 @@
 package de.poeschl.histogramGenerator;
 
 /**
- * Created by Markus Pöschl on 29.03.2014.
+ * Created by Markus Pöschl on 30.03.2014.
  */
 
 import javafx.application.Application;
