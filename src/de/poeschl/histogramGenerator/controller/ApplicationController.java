@@ -21,6 +21,7 @@ package de.poeschl.histogramGenerator.controller;
 
 import de.poeschl.histogramGenerator.HistogramGeneratorApplication;
 import de.poeschl.histogramGenerator.exporter.CsvExporter;
+import de.poeschl.histogramGenerator.exporter.PngExporter;
 import de.poeschl.histogramGenerator.generators.RGBHistogramGenerator;
 import de.poeschl.histogramGenerator.models.ExportFileFormat;
 import de.poeschl.histogramGenerator.models.HistogramData;
@@ -44,7 +45,7 @@ import javafx.scene.input.KeyEvent;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -141,11 +142,16 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         } else if (actionSource.equals(csvExportButton)) {
             CsvExporter exporter = new CsvExporter();
 
-            FileWriter output = FileHelper.getInstance().getSaveFileWriter(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.CSV);
+            FileOutputStream output = FileHelper.getInstance().getSaveFileOutput(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.CSV);
 
             exporter.exportToFileWriter(output, currentHistogramData);
 
         } else if (actionSource.equals(pngExportButton)) {
+            PngExporter exporter = new PngExporter();
+
+            FileOutputStream output = FileHelper.getInstance().getSaveFileOutput(HistogramGeneratorApplication.getApplicationStage(), ExportFileFormat.PNG);
+
+            exporter.exportToFileWriter(output, currentHistogramData);
 
         }
     }

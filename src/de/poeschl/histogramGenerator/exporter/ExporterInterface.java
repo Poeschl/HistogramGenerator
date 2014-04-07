@@ -21,17 +21,17 @@ package de.poeschl.histogramGenerator.exporter;
 
 import de.poeschl.histogramGenerator.models.HistogramData;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 
 /**
  * Created by Markus Pöschl on 31.03.2014.
  */
 public interface ExporterInterface {
     /**
-     * Export the generated data to a file through a FileWriter.
+     * Export the generated data to a file through a FileOutputStream.
      *
-     * @param writer The FileWriter to write to.
-     * @param data   The data to be written into the file.
+     * @param fileStream The File to write to.
+     * @param data       The data to be written into the file.
      */
-    public void exportToFileWriter(FileWriter writer, HistogramData data);
+    public void exportToFileWriter(FileOutputStream fileStream, HistogramData data);
 }

@@ -19,6 +19,8 @@
 
 package de.poeschl.histogramGenerator.models;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +42,7 @@ public enum ExportFileFormat {
         this.label = label;
     }
 
+    @NotNull
     public List<String> getExtensions() {
         return extensions;
     }

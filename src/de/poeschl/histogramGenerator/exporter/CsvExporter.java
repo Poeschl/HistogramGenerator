@@ -22,7 +22,7 @@ package de.poeschl.histogramGenerator.exporter;
 import de.poeschl.histogramGenerator.models.ChannelData;
 import de.poeschl.histogramGenerator.models.HistogramData;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 /**
@@ -31,9 +31,9 @@ import java.io.PrintWriter;
 public class CsvExporter implements ExporterInterface {
 
     @Override
-    public void exportToFileWriter(FileWriter writer, HistogramData data) {
+    public void exportToFileWriter(FileOutputStream outputStream, HistogramData data) {
 
-        PrintWriter printWriter = new PrintWriter(writer);
+        PrintWriter printWriter = new PrintWriter(outputStream);
 
         //Write header in file
         printWriter.println(generateHeadEntry());

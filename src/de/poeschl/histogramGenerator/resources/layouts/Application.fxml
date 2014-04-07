@@ -67,7 +67,7 @@
                 </Separator>
                 <StackPane prefHeight="-1.0" prefWidth="-1.0">
                     <children>
-                        <AreaChart fx:id="histogramChart" minHeight="-Infinity" prefHeight="250.0">
+                        <AreaChart fx:id="histogramChart" animated="true" minHeight="250.0" prefHeight="250.0">
                             <xAxis>
                                 <NumberAxis autoRanging="false" minorTickCount="2" minorTickVisible="true" side="BOTTOM"
                                             tickUnit="10.0" upperBound="255.0"/>

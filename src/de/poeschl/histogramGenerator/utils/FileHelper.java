@@ -24,7 +24,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,13 +62,13 @@ public class FileHelper {
     }
 
     /**
-     * Returns a FileWriter of the file, where the user wants to store the file. Don't forget to close the writer after finishing!
+     * Returns a stream of the file, where the user wants to store the file. Don't forget to close the writer after finishing!
      *
      * @param stage      The current application stage to display the chooser.
      * @param fileFormat The file format of the file to save. The "All files" filter is automatically added.
-     * @return A FileWriter which is connected to the chosen file.
+     * @return A FileOutputStream which is connected to the chosen file.
      */
-    public FileWriter getSaveFileWriter(Stage stage, ExportFileFormat fileFormat) {
+    public FileOutputStream getSaveFileOutput(Stage stage, ExportFileFormat fileFormat) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File...");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -80,13 +80,22 @@ public class FileHelper {
         }
 
         File output = fileChooser.showSaveDialog(stage);
-        FileWriter fileWriter = null;
+
+        if (output == null) {
+            return null;
+        }
+
+        if (!output.getName().matches(".+[.].+")) {
+            output = new File(output.getPath() + fileFormat.getLabel());
+        }
+
+        FileOutputStream outputStream = null;
         try {
-            fileWriter = new FileWriter(output);
+            outputStream = new FileOutputStream(output);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileWriter;
+        return outputStream;
     }
 
     private enum ImageInputType {
