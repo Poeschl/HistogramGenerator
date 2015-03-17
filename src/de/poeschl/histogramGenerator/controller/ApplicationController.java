@@ -131,6 +131,7 @@ public class ApplicationController implements Initializable, EventHandler<Event>
         if (actionSource.equals(selectFileInputButton)) {
             //Find the input file
             selectInputFile();
+            inputPathChanged = true;
 
         } else if (actionSource.equals(generateButton)) {
             boolean changed = false;
