@@ -1,6 +1,6 @@
 /*******************************************************************************
  * HistogramGenerator
- *     Copyright (C) 2014 Markus Pöschl
+ *     Copyright (C) 2015 Markus Pöschl
  *
  *     This program is free software; you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by

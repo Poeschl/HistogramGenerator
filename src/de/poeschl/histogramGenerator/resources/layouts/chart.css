@@ -1,17 +1,74 @@
-.chart-area-symbol { visibility: hidden; }
-.chart-legend-item-symbol{ visibility: visible }
+/*******************************************************************************
+ * HistogramGenerator
+ *     Copyright (C) 2015 Markus Pöschl
+ *
+ *     This program is free software; you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License along
+ *     with this program; if not, write to the Free Software Foundation, Inc.,
+ *     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ ******************************************************************************/
 
-.default-color0 { -fx-background-color: #909090, #90909077; }
-.default-color1 { -fx-background-color: #ff3232, #ff323277; }
-.default-color2 { -fx-background-color: #32ff54, #32ff5477; }
-.default-color3 { -fx-background-color: #3276ff, #3276ff77; }
+.chart-area-symbol {
+    visibility: hidden;
+}
 
-.default-color0.chart-series-area-line { -fx-stroke: #909090; }
-.default-color1.chart-series-area-line { -fx-stroke: #ff3232; }
-.default-color2.chart-series-area-line { -fx-stroke: #32ff54; }
-.default-color3.chart-series-area-line { -fx-stroke: #3276ff; }
+.chart-legend-item-symbol {
+    visibility: visible
+}
 
-.default-color0.chart-series-area-fill { -fx-fill: #909090ff; }
-.default-color1.chart-series-area-fill { -fx-fill: #ff323255; }
-.default-color2.chart-series-area-fill { -fx-fill: #32ff5455; }
-.default-color3.chart-series-area-fill { -fx-fill: #3276ff55; }
+.default-color0 {
+    -fx-background-color: #909090, #90909077;
+}
+
+.default-color1 {
+    -fx-background-color: #ff3232, #ff323277;
+}
+
+.default-color2 {
+    -fx-background-color: #32ff54, #32ff5477;
+}
+
+.default-color3 {
+    -fx-background-color: #3276ff, #3276ff77;
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #909090;
+}
+
+.default-color1.chart-series-area-line {
+    -fx-stroke: #ff3232;
+}
+
+.default-color2.chart-series-area-line {
+    -fx-stroke: #32ff54;
+}
+
+.default-color3.chart-series-area-line {
+    -fx-stroke: #3276ff;
+}
+
+.default-color0.chart-series-area-fill {
+    -fx-fill: #909090ff;
+}
+
+.default-color1.chart-series-area-fill {
+    -fx-fill: #ff323255;
+}
+
+.default-color2.chart-series-area-fill {
+    -fx-fill: #32ff5455;
+}
+
+.default-color3.chart-series-area-fill {
+    -fx-fill: #3276ff55;
+}
